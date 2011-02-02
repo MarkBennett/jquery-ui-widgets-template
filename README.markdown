@@ -11,6 +11,12 @@ This template uses Jasmine to specify the behaviour of your jQuery UI widget.  J
 Running the tests in your browser
 -----------------------------------
 
+As most modern browsers prevent JavaScript running from the file-system to access other content on the file system the test specs cannot make use of jQuery XHR calls.  To resolve this, you need to run a web server serving the contents of the widget directory.
+
+    <code>python -m SimpleHTTPServer</code>
+
+The tests are being refactored to prevent the need for XHR which will eliminate this dependency.
+
 Open the <code>/spec/SpecRunner.html</code> file in your web browser to run the tests using the Jasmine browser test runner.
 
 Running the tests on the command-line
@@ -24,3 +30,4 @@ TODO
 =====
 
 * Add support for junit compatable XML output from the command-line
+* Eliminate XHR dependency on local web server to run tests
