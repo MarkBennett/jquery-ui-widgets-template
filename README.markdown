@@ -13,9 +13,14 @@ Running the tests in your browser
 
 Open the <code>/spec/SpecRunner.html</code> file in your web browser to run the tests using the Jasmine browser test runner.
 
+Running the tests on the command-line
+---------------------------------------
+
+Using Jasmine and PhantomJS allows us to run our unit tests from the command-line.  You'll need phantomjs installed on your machine before you can run this:
+
+    <code>phantomjs spec/run_jasmine.js http://localhost:8000/spec/SpecRunner.html</code>
+
 TODO
 =====
 
-* Add example widget tests (pass, fail, and pending)
-* Implement widget
-* Add support for running tests from the command-line
+* Add support for junit compatable XML output from the command-line
