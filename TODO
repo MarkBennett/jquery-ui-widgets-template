@@ -1,3 +1,4 @@
+* Add a make system which tests custom code against jslint (jquery)
 * Add a build system which minimizes JS with uglify (jquery)
 * Add a build system which combines many seperate javascript files (jquery-ui)
 * Add a documentation system which builds HTML documentation (nodejs)
