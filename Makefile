@@ -69,7 +69,15 @@ ${JQ_MIN}: jquery
 	else \
 		echo "You must have NodeJS installed in order to minify."; \
 	fi
-	
+
+test:
+	phantomjs spec/run_jasmine.js http://localhost:2000/spec/SpecRunner.html 2> /dev/null
+
+test-hudson:
+	phantomjs spec/run_jasmine_for_hudson.js http://localhost:2000/spec/SpecRunner.html 2> /dev/null
+
+test-browser:
+	google-chrome http://localhost:2000/spec/SpecRunner.html
 
 clean:
 	@@echo "Removing Distribution directory:" ${DIST_DIR}
