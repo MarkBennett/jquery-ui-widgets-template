@@ -1,6 +1,6 @@
 var JSLINT = require("./lib/jslint").JSLINT,
 	print = require("sys").print,
-	src = require("fs").readFileSync("dist/jquery.js", "utf8");
+	src = require("fs").readFileSync("dist/custom-widget.js", "utf8");
 
 JSLINT(src, { evil: true, forin: true, maxerr: 100 });
 
