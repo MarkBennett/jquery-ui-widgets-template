@@ -1,2 +1,3 @@
 *.swp
 tmux-session.sh
+dist/*
