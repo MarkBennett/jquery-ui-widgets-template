@@ -1,3 +1,4 @@
 *.swp
 tmux-session.sh
 dist/*
+test-hudson-output.xml
