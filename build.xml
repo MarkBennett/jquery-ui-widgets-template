@@ -2,7 +2,12 @@
   <description>Test and distribute a custom jQueryUI widget.</description>
 
   <property name="src" location="src" />
+  <property name="build" location="build" />
   <property name="dist" location="dist" />
+  <property name="dist-js-file" location="${dist}/custom-widget.js" />
+  <property name="dist-min-js-file" location="${dist}/custom-widget.min.js" />
+  <property name="js-engine" value="node" />
+  <property name="js-compiler" value="build/uglify.js" />
 
   <target name="test">
     <exec executable="phantomjs" error="/dev/null">
@@ -18,16 +23,64 @@
     </exec>
   </target>
 
+  <target name="test-browser">
+    <exec executable="google-chrome" spawn="true">
+      <arg value="http://localhost:8000/spec/SpecRunner.html" />
+    </exec>
+  </target>
+
   <target name="serve">
-    <description>Serve this directory from an HTTP server running on http://localhost:8000</description>
+    <echo>Serving project on http://localhost:8000</echo>
     <exec executable="python">
       <arg value="-m" />
       <arg value="SimpleHTTPServer" />
     </exec>
   </target>
 
-  <target name="dist">
+  <target name="dist-init">
     <mkdir dir="${dist}" />
+
+    <exec executable="date" outputProperty="dist-date" logError="true" />
+    <exec executable="cat" outputProperty="dist-version" logError="true">
+      <arg value="version.txt" />
+    </exec>
+  </target>
+
+  <target name="concat-js" depends="dist-init">
+    <concat destfile="${dist-js-file}">
+      <filelist dir="${src}" files="intro.js" />
+      <fileset dir="${src}" includes="*.js" excludes="intro.js,outro.js"/>
+      <filelist dir="${src}" files="outro.js" />
+    </concat>
+  </target>
+
+  <target name="replace-js" depends="concat-js">
+    <replaceregexp file="${dist-js-file}"
+      match="@DATE"
+      replace="${dist-date}"
+     />
+    <replaceregexp file="${dist-js-file}"
+      match="@VERSION"
+      replace="${dist-version}"
+     />
+  </target>
+
+  <target name="lint-js" depends="replace-js">
+    <echo message="Checking against JSLINT..." />
+    <exec executable="${js-engine}">
+      <arg value="build/jslint-check.js" />
+    </exec>
+  </target>
+
+  <target name="minify-js" depends="replace-js">
+    <echo message="Minifying JavaScript..." />
+    <exec executable="${js-engine}" output="${dist-min-js-file}" logError="true">
+      <arg value="build/uglify.js" />
+      <arg value="${dist-js-file}" />
+    </exec>
+  </target>
+
+  <target name="dist" depends="lint-js, minify-js">
   </target>
 
   <target name="clean">

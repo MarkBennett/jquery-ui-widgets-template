@@ -4,4 +4,5 @@
  * Your copyright, license and contact information goes here.
  *
  * Date: @DATE
+ * Version: @VERSION
  */
