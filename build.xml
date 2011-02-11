@@ -1,0 +1,37 @@
+<project name="CustomWidget" default="test" basedir=".">
+  <description>Test and distribute a custom jQueryUI widget.</description>
+
+  <property name="src" location="src" />
+  <property name="dist" location="dist" />
+
+  <target name="test">
+    <exec executable="phantomjs" error="/dev/null">
+      <arg value="spec/run_jasmine.js" />
+      <arg value="http://localhost:8000/spec/SpecRunner.html" />
+    </exec>
+  </target>
+
+  <target name="test-hudson">
+    <exec executable="phantomjs" output="test-hudson-output.xml" error="/dev/null">
+      <arg value="spec/run_jasmine_for_hudson.js" />
+      <arg value="http://localhost:8000/spec/SpecRunner.html" />
+    </exec>
+  </target>
+
+  <target name="serve">
+    <description>Serve this directory from an HTTP server running on http://localhost:8000</description>
+    <exec executable="python">
+      <arg value="-m" />
+      <arg value="SimpleHTTPServer" />
+    </exec>
+  </target>
+
+  <target name="dist">
+    <mkdir dir="${dist}" />
+  </target>
+
+  <target name="clean">
+    <delete dir="${dist}" />
+  </target>
+
+</project>
