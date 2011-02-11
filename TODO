@@ -1,6 +1,3 @@
-* Add a make system which tests custom code against jslint (jquery)
-* Add a build system which minimizes JS with uglify (jquery)
-* Add a build system which combines many seperate javascript files (jquery-ui)
+* Add a system to minify and package CSS assets
 * Add a documentation system which builds HTML documentation (nodejs)
-* Produce Hudson compatable unit test XML
 * Add an "autotest" feature which runs tests automatically as implementation and test files change
