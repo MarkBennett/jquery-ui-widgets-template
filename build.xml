@@ -9,7 +9,8 @@
   <property name="js-engine" value="node" />
   <property name="js-compiler" value="build/uglify.js" />
   <property name="theme" location="${src}/theme" />
-  <property name="dist-css-file" location="${dist}/theme.css" />
+  <property name="dist-theme-dir" location="${dist}/theme" />
+  <property name="dist-css-file" location="${dist-theme-dir}/theme.css" />
 
   <target name="test">
     <exec executable="phantomjs" error="/dev/null">
@@ -41,6 +42,7 @@
 
   <target name="dist-init">
     <mkdir dir="${dist}" />
+    <mkdir dir="${dist-theme-dir}" />
 
     <exec executable="date" outputProperty="dist-date" logError="true" />
     <exec executable="cat" outputProperty="dist-version" logError="true">
@@ -82,7 +84,7 @@
     </exec>
   </target>
 
-  <target name="concat-css">
+  <target name="concat-theme-css">
     <echo message="Concatinating css..." />
     <concat destfile="${dist-css-file}">
       <filelist dir="${theme}" files="intro.css" />
@@ -91,7 +93,13 @@
     </concat>
   </target>
 
-  <target name="dist" depends="lint-js, minify-js, concat-css">
+  <target name="dist-theme" depends="concat-theme-css">
+    <copy todir="${dist-theme-dir}">
+      <fileset dir="${theme}" excludes="*.css" />
+    </copy>
+  </target>
+
+  <target name="dist" depends="lint-js, minify-js, dist-theme">
   </target>
 
   <target name="clean">
