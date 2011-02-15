@@ -8,6 +8,8 @@
   <property name="dist-min-js-file" location="${dist}/custom-widget.min.js" />
   <property name="js-engine" value="node" />
   <property name="js-compiler" value="build/uglify.js" />
+  <property name="theme" location="${src}/theme" />
+  <property name="dist-css-file" location="${dist}/theme.css" />
 
   <target name="test">
     <exec executable="phantomjs" error="/dev/null">
@@ -80,7 +82,16 @@
     </exec>
   </target>
 
-  <target name="dist" depends="lint-js, minify-js">
+  <target name="concat-css">
+    <echo message="Concatinating css..." />
+    <concat destfile="${dist-css-file}">
+      <filelist dir="${theme}" files="intro.css" />
+      <fileset dir="${theme}" includes="*.css" excludes="intro.css,outro.css"/>
+      <filelist dir="${theme}" files="outro.css" />
+    </concat>
+  </target>
+
+  <target name="dist" depends="lint-js, minify-js, concat-css">
   </target>
 
   <target name="clean">
